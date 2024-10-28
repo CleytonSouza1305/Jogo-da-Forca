@@ -56,18 +56,24 @@ header button:hover {
 }
 
 .box {
-  width: 30px;
-  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.letra {
+.space {
+  width: 40px;
+  height: 40px;
+}
+
+.box.letra {
+  width: 40px;
+  height: 40px;
   background-color: #f4f5f6; 
   color: #000; 
   text-align: center; 
   border: 1px solid black; 
+  font-size: 1.5rem;
 }
 
 .content {
@@ -75,6 +81,7 @@ header button:hover {
   align-items: flex-end;
   justify-content: space-between;
   height: 300px;
+  gap: 2rem;
 }
 
 .game {
@@ -89,6 +96,11 @@ header button:hover {
   padding-top: 0.5rem;
   font-size: 1.2rem;
   font-weight: 500;
+}
+
+.revelate-palavra {
+  font-weight: 700;
+  color: rgb(240, 39, 39);
 }
 
 .display {
