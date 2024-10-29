@@ -23,14 +23,27 @@
           <div class="stats">
             <p id="category"></p>
             <span id="tenttive"></span>
-            <p class="text display">Você perdeu, a palavra era <span class="revelate-palavra"></span></p>
           </div>
           <div class="words"></div>
         </div>
         <div class="content-word"></div>
-            </div>
+      </div>
       </div>
   </main>
+
+  <div class="game-over-modal display">
+    <div class="content-game-over">
+      <button type="button" id="refresh-btn"><i class="fa-solid fa-rotate-right"></i></button>
+      <p class="text">Você perdeu, a palavra era <span class="revelate-palavra"></span></p>
+    </div>
+  </div>
+
+  <div class="game-winner-modal display">
+    <div class="content-game-winner">
+      <button type="button" id="refresh-btn-winner"><i class="fa-solid fa-rotate-right"></i></button>
+      <p class="text-winner">Parabéns! Você acertou a palavra <span class="revelate-palavra-winner"></span></p>
+    </div>
+  </div>
   <script type="module" src="js/index.js"></script>
 </body>
 </html>

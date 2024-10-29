@@ -40,10 +40,14 @@ function createInput(palavra) {
 }
 
 function startGame() {
+  document.querySelector('.game-over-modal').classList.add('display')
   gameStats.life = 7;
+  updatePlayerLife(gameStats.life)
   gameStats.playing = true;
   gameStats.status = 'playing';
   gameStats.wordsClicked = [];
+  let letrasDoArray = renderClickedWord(gameStats.wordsClicked)
+  document.querySelector('.words').innerText = letrasDoArray
   gameStats.arrayDePalavras = palavrasAndCategory();
   gameStats.secretElement = gerarPalavraSecreta(gameStats.arrayDePalavras);
   gameStats.palavraSecreta = gameStats.secretElement.nome.toLowerCase();
@@ -52,22 +56,18 @@ function startGame() {
   document.getElementById('category').innerText = `Categoria: ${gameStats.categoria}`;
   document.getElementById('tenttive').innerText = `Tentativas restantes: ${gameStats.life}`;
 
-  console.log(gameStats.palavraSecreta);
   createInput(gameStats.palavraSecreta);
 }
 
 function updatePlayerLife(life) {
   const img = document.getElementById('forca-image');
-  img.src = `../img/forca0${7 - life}.png`;
+  img.src = `https://cleytonsouza1305.github.io/Jogo-da-Forca/img/forca0${7 - life}.png`;
 
   if (life <= 0) {
     img.src = '../img/forca06.png'
     gameStats.status = 'game-over';
 
-    const revelate = document.querySelector('.text')
-    revelate.classList.remove('display')
-    const palavra = document.querySelector('.revelate-palavra')
-    palavra.textContent = `"${gameStats.palavraSecreta.toUpperCase()}"`
+    restartGame()
   }
 }
 
@@ -84,6 +84,9 @@ function disableKey(key, palavra) {
   if (gameStats.status === 'playing' && !gameStats.wordsClicked.includes(key)) {
     gameStats.wordsClicked.push(key);
 
+    let letrasDoArray = renderClickedWord(gameStats.wordsClicked)
+    document.querySelector('.words').innerText = letrasDoArray
+
     if (!palavra.includes(key)) {
       gameStats.life--
       document.getElementById('tenttive').innerText = `Tentativas restantes: ${gameStats.life}`;
@@ -94,7 +97,7 @@ function disableKey(key, palavra) {
 
     if (checkIfWinner()) {
       gameStats.status = 'winner';
-      alert('Parabéns, você venceu!');
+      restartGameWinner()
     }
   }
 }
@@ -135,3 +138,36 @@ function checkIfWinner() {
     return checkPalavra === gameStats.palavraSecreta.replace(/\s+/g, '');
   }
   
+function renderClickedWord(arrayDeLetras) {
+  let letras = ''
+  arrayDeLetras.forEach((l, index) => {
+    if (index === arrayDeLetras.length -1) {
+      letras += l
+    } else {
+      letras += `${l} - `
+    }
+  })
+
+  return letras
+}
+
+function restartGame() {
+  document.querySelector('.game-over-modal').classList.remove('display')
+
+  const palavra = document.querySelector('.revelate-palavra')
+  palavra.textContent = `"${gameStats.palavraSecreta.toUpperCase()}"`
+  
+  document.getElementById('refresh-btn').addEventListener('click', startGame)
+}
+
+function restartGameWinner() {
+  document.querySelector('.game-winner-modal').classList.remove('display')
+
+  const palavra = document.querySelector('.revelate-palavra-winner')
+  palavra.textContent = `"${gameStats.palavraSecreta.toUpperCase()}"`
+  
+  document.getElementById('refresh-btn-winner').addEventListener('click', () => {
+    document.querySelector('.game-winner-modal').classList.add('display')
+    startGame()
+  })
+}
